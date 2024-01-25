@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PolyDownloader</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      function extractID(url) {
+        const match = url.match(/capture\/(.*)/);
+        return match ? match[1] : "";
+      }
 
+      function goToDownload(type) {
+        const urlInput = document.getElementById("polycam-url");
+        const id = extractID(urlInput.value);
+        if (id) {
+          let baseUrl = "https://storage.polycam.io/";
+          switch (type) {
+            case "obj":
+              baseUrl += `export/${id}/poly.zip`;
+              break;
+            case "glb":
+              baseUrl += `captures/${id}/poly.glb`;
+              break;
+            case "fbx":
+              baseUrl += `export/${id}/poly.fbx`;
+              break;
+            case "xyz":
+              baseUrl += `export/${id}/point_cloud.xyz`;
+              break;
+            case "video":
+              baseUrl += `captures/${id}/polycam.mp4`;
+              break;
+            case "raw":
+              baseUrl += `captures/${id}/session.zip`;
+              break;
+            case "blueprint":
+              baseUrl = `https://poly.cam/api/capture/${id}/export?format=blueprint`;
+              break;
+          }
+          window.open(baseUrl, "_blank");
+        } else {
+          alert("Please enter a valid Polycam URL.");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="url-input-container">
+      <input
+        type="text"
+        id="polycam-url"
+        placeholder="Input your Polycam URL here - example 'https://poly.cam/capture/2b092dd2-fd5b-44f5-9884-95f01d35840c'"
+      />
+    </div>
+
+    <div class="category-container">
+      <div class="category">
+        <div class="category-header">Mesh</div>
+        <div class="button-grid">
+          <button class="mesh" onclick="goToDownload('obj')">OBJ</button>
+          <button class="mesh" onclick="goToDownload('glb')">GLB</button>
+          <button class="mesh" onclick="goToDownload('fbx')">FBX</button>
+          <button class="mesh" onclick="goToDownload('dae')">DAE</button>
+          <button class="mesh" onclick="goToDownload('stl')">STL</button>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="category-header">Point Cloud</div>
+        <div class="button-grid">
+          <button class="point-cloud" onclick="goToDownload('ply')">PLY</button>
+          <button class="point-cloud" onclick="goToDownload('las')">LAS</button>
+          <button class="point-cloud" onclick="goToDownload('pts')">PTS</button>
+          <button class="point-cloud" onclick="goToDownload('xyz')">XYZ</button>
+          <button class="point-cloud" onclick="goToDownload('dxf')">DXF</button>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="category-header">Other</div>
+        <div class="button-grid">
+          <button class="other" onclick="goToDownload('video')">Video</button>
+          <button class="other" onclick="goToDownload('raw')">
+            Raw Images
+          </button>
+          <button class="other" onclick="goToDownload('blueprint')">
+            Blueprint
+          </button>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="category-header">Splat</div>
+        <div class="button-grid">
+          <button class="splat" onclick="goToDownload('splat_ply')">
+            Splat PLY
+          </button>
+          <button class="splat" onclick="goToDownload('images')">Images</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
