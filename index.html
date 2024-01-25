@@ -32,7 +32,7 @@
             case "video":
               baseUrl += `captures/${id}/polycam.mp4`;
               break;
-            case "raw":
+            case "images":
               baseUrl += `captures/${id}/session.zip`;
               break;
             case "blueprint":
@@ -82,7 +82,7 @@
         <div class="category-header">Other</div>
         <div class="button-grid">
           <button class="other" onclick="goToDownload('video')">Video</button>
-          <button class="other" onclick="goToDownload('raw')">
+          <button class="other" onclick="goToDownload('images')">
             Raw Images
           </button>
           <button class="other" onclick="goToDownload('blueprint')">
